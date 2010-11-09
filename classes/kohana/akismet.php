@@ -104,6 +104,12 @@ class Kohana_Akismet {
             $this->_config['blog'] = $config['blog'];
         }
 
+        $this->_config['server'] = isset($config['server'])
+                                   ? $config['server'] : Akismet::AKISMET_HOST;
+
+        $this->_config['port']   = isset($config['port'])
+                                   ? $config['port'] : Akismet::AKISMET_PORT;
+
         // Chainable method
         return $this;
     }
@@ -113,7 +119,7 @@ class Kohana_Akismet {
      */
     protected function connect()
     {
-        if ( ! ($this->_connection = @fsockopen(Akismet::AKISMET_HOST, Akismet::AKISMET_PORT)))
+        if ( ! ($this->_connection = @fsockopen($this->_config['server'], $this->_config['port'])))
         {
             throw new Exception("Could not connect to akismet server.");
         }
@@ -141,7 +147,7 @@ class Kohana_Akismet {
         if ($this->_connection)
         {
             $http_request = "POST /1.1/$path HTTP/1.0\r\n"
-                          . "Host: ".(( ! empty($this->_key)) ? $this->_key."." : NULL).Akismet::AKISMET_HOST."\r\n"
+                          . "Host: ".(( ! empty($this->_key)) ? $this->_key."." : NULL).$this->_config['server']."\r\n"
                           . "Content-Type: application/x-www-form-urlencoded; charset=utf-8\r\n"
                           . "Content-Length: ".strlen($request)."\r\n"
                           . "User-Agent: ".Akismet::$_user_agent."\r\n"

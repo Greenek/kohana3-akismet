@@ -8,4 +8,7 @@ return array(
      */
     'key' => 'YOUR_API_KEY',
 
+    'server'    => 'rest.akismet.com',
+    'port'      => 80,
+
 );
