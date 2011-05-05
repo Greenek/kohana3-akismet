@@ -52,7 +52,7 @@ class Kohana_Akismet {
         $this->_config = Kohana::config('akismet');
 
         // Set base URL of page, required to verification.
-        $this->_config['blog'] = Url::base(FALSE, TRUE);
+        $this->_config['blog'] = URL::base(TRUE);
 
         // Add/overwrite with custom config values
         $this->setup($config);
