@@ -49,7 +49,7 @@ class Kohana_Akismet {
     public function __construct(array $comment, array $config = array())
     {
         // Load configuration from Akismet config file
-        $this->_config = Kohana::config('akismet');
+        $this->_config = Kohana::$config->load('akismet');
 
         // Set base URL of page, required to verification.
         $this->_config['blog'] = URL::base(TRUE);
